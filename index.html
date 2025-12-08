@@ -1,0 +1,752 @@
+﻿<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Clima Laboral - Cuestionario</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #f5f7fb;
+      --card: #ffffff;
+      --border: #e2e8f0;
+      --text: #0f172a;
+      --muted: #475569;
+      --primary: #1f3fa6;
+      --primary-soft: #3857c9;
+      --accent: #5f7bff;
+      --success: #0f9d58;
+      --warning: #f59e0b;
+      --danger: #dc2626;
+      --shadow: 0 14px 35px rgba(31, 63, 166, 0.08);
+      --radius: 14px;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      color: var(--text);
+      background: radial-gradient(circle at 20% 20%, #eef2ff 0, #f8fafc 35%, #f8fafc 100%);
+      min-height: 100vh;
+    }
+    a { color: var(--primary); text-decoration: none; }
+    .topbar {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      backdrop-filter: blur(12px);
+      background: rgba(248, 250, 252, 0.9);
+      border-bottom: 1px solid var(--border);
+    }
+    .topbar__inner {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 14px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 700;
+      color: var(--primary);
+      letter-spacing: -0.02em;
+    }
+    .brand__logo {
+      width: 38px;
+      height: 38px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+      display: grid;
+      place-items: center;
+      color: #fff;
+      font-weight: 700;
+      font-size: 18px;
+      box-shadow: var(--shadow);
+    }
+    nav {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    nav a {
+      padding: 10px 14px;
+      border-radius: 12px;
+      font-weight: 600;
+      color: var(--muted);
+    }
+    nav a:hover { background: rgba(31, 63, 166, 0.08); color: var(--primary); }
+    .badge {
+      background: rgba(31, 63, 166, 0.08);
+      color: var(--primary);
+      padding: 8px 12px;
+      border-radius: 999px;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 14px;
+    }
+    .hero {
+      max-width: 1100px;
+      margin: 24px auto 10px;
+      padding: 0 20px;
+    }
+    .hero__card {
+      background: linear-gradient(135deg, rgba(31, 63, 166, 0.95) 0%, rgba(95, 123, 255, 0.95) 100%);
+      color: #fff;
+      border-radius: 20px;
+      padding: 28px;
+      box-shadow: var(--shadow);
+      position: relative;
+      overflow: hidden;
+    }
+    .hero__card::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 80% 20%, rgba(255,255,255,0.35), transparent 40%);
+      pointer-events: none;
+    }
+    .hero__title { margin: 0 0 10px; font-size: 26px; letter-spacing: -0.01em; }
+    .hero__text { margin: 0; max-width: 720px; color: rgba(255,255,255,0.92); line-height: 1.5; }
+    .page {
+      max-width: 1100px;
+      margin: 0 auto 60px;
+      padding: 0 20px;
+      display: grid;
+      gap: 16px;
+    }
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 22px;
+      box-shadow: var(--shadow);
+    }
+    .card__title {
+      margin: 0 0 8px;
+      font-size: 20px;
+      letter-spacing: -0.01em;
+    }
+    .card__lead { margin: 0 0 12px; color: var(--muted); }
+    form { display: grid; gap: 18px; }
+    .field {
+      display: grid;
+      gap: 8px;
+      padding: 14px;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      background: #fafbff;
+    }
+    .field__label {
+      font-weight: 600;
+      color: var(--text);
+      margin: 0;
+      line-height: 1.4;
+    }
+    input[type="text"], select, textarea {
+      width: 100%;
+      padding: 12px 12px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      font-size: 15px;
+      font-family: inherit;
+      background: #fff;
+      transition: border 0.2s, box-shadow 0.2s;
+    }
+    input[type="text"]:focus, select:focus, textarea:focus {
+      outline: none;
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(31, 63, 166, 0.15);
+    }
+    textarea { min-height: 110px; resize: vertical; }
+    .options-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 8px;
+    }
+    .option-pill {
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 10px 12px;
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      background: #fff;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+    .option-pill:hover { border-color: var(--primary-soft); box-shadow: 0 6px 18px rgba(31, 63, 166, 0.08); }
+    .option-pill input { margin: 0; }
+    .section-block {
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 16px;
+      background: #fff;
+      box-shadow: inset 0 1px 0 rgba(15, 23, 42, 0.03);
+    }
+    .section-block + .section-block { margin-top: 8px; }
+    .section-block__title { margin: 0 0 4px; font-size: 18px; }
+    .section-block__desc { margin: 0 0 12px; color: var(--muted); }
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+    }
+    button {
+      border: none;
+      padding: 12px 16px;
+      border-radius: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      font-size: 15px;
+      transition: transform 0.05s ease, box-shadow 0.15s ease, opacity 0.2s;
+    }
+    button:disabled { opacity: 0.6; cursor: not-allowed; }
+    .btn-primary {
+      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-soft) 100%);
+      color: #fff;
+      box-shadow: var(--shadow);
+    }
+    .btn-secondary {
+      background: #fff;
+      color: var(--primary);
+      border: 1px solid var(--primary);
+    }
+    .status {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 12px;
+      border-radius: 10px;
+      background: rgba(15, 157, 88, 0.08);
+      color: var(--success);
+      font-weight: 600;
+    }
+    .status--warning { background: rgba(245, 158, 11, 0.12); color: var(--warning); }
+    .status--info { background: rgba(31, 63, 166, 0.08); color: var(--primary); }
+    .feedback {
+      padding: 12px 14px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      background: #f8fafc;
+      color: var(--muted);
+      font-weight: 600;
+      display: none;
+    }
+    .feedback--visible { display: block; }
+    .hidden { display: none; }
+    .locked { opacity: 0.7; pointer-events: none; }
+    iframe {
+      width: 100%;
+      height: 520px;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+    }
+    footer {
+      max-width: 1100px;
+      margin: 30px auto 60px;
+      padding: 0 20px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+    @media (max-width: 720px) {
+      .topbar__inner { flex-direction: column; align-items: flex-start; }
+      .hero__card { padding: 20px; }
+      .section-block { padding: 12px; }
+    }
+  </style>
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar__inner">
+      <div class="brand">
+        <div class="brand__logo">CL</div>
+        <div>
+          Clima Laboral
+          <div style="font-size:12px; color: var(--muted); font-weight:500;">Cuestionario institucional</div>
+        </div>
+      </div>
+      <nav>
+        <a href="#formulario">Formulario</a>
+        <a href="#reporte">BI</a>
+        <span id="user-chip" class="badge hidden">Sin usuario</span>
+      </nav>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="hero__card">
+      <h1 class="hero__title">Portal de Clima Laboral</h1>
+      <p class="hero__text">
+        Ingrese con su usuario para responder el cuestionario institucional. Puede guardar un borrador o
+        enviarlo de forma definitiva. Una vez enviado, las respuestas no se podrán modificar.
+      </p>
+    </div>
+  </section>
+
+  <main class="page">
+    <section id="login-card" class="card">
+      <h2 class="card__title">Inicio de sesión</h2>
+      <p class="card__lead">Use las credenciales compartidas para acceder.</p>
+      <form id="login-form">
+        <div class="field">
+          <label class="field__label" for="username">Usuario</label>
+          <input id="username" name="username" type="text" autocomplete="username" placeholder="Ej: acaputi" required />
+        </div>
+        <div class="field">
+          <label class="field__label" for="password">Contraseña</label>
+          <input id="password" name="password" type="password" autocomplete="current-password" placeholder="Ej: acaputi" required />
+        </div>
+        <div class="actions">
+          <button type="submit" class="btn-primary">Ingresar</button>
+          <div class="status status--info">Usuarios de prueba: acaputi / rmaidana</div>
+        </div>
+        <div id="login-error" class="feedback"></div>
+      </form>
+    </section>
+
+    <section id="formulario" class="card hidden">
+      <div class="actions" style="justify-content: space-between; align-items: center;">
+        <div>
+          <h2 class="card__title" style="margin: 0;">Cuestionario</h2>
+          <p class="card__lead" style="margin: 2px 0 0;">Complete todas las preguntas. Puede guardar borrador antes de enviar.</p>
+        </div>
+        <div id="status-chip" class="badge">Borrador editable</div>
+      </div>
+      <form id="survey-form" aria-label="Cuestionario de clima laboral">
+        <div id="questions"></div>
+        <div class="actions">
+          <button id="save-draft" type="button" class="btn-secondary">Guardar borrador</button>
+          <button id="submit-final" type="button" class="btn-primary">Enviar respuesta final</button>
+        </div>
+        <div id="form-feedback" class="feedback"></div>
+      </form>
+    </section>
+
+    <section id="reporte" class="card hidden">
+      <h2 class="card__title">BI preliminar</h2>
+      <p class="card__lead">Este reporte se alimentará desde la hoja de respuestas.</p>
+      <iframe src="https://lookerstudio.google.com/embed/reporting/e8853ba7-5d63-48fe-9c4b-0a21213edd7b/page/R5sfF" allowfullscreen></iframe>
+    </section>
+  </main>
+
+  <footer>
+    Fundación Favaloro - Clima Laboral. Una vez enviada la respuesta, no podrá editarse.
+  </footer>
+
+  <script>
+    // --- Configuracion ---
+    const SHEETS_WEBAPP_URL = 'REEMPLAZAR_CON_URL_WEBAPP_APPS_SCRIPT';
+    const USERS = {
+      acaputi: 'acaputi',
+      rmaidana: 'rmaidana',
+    };
+    const LOCAL_KEY_PREFIX = 'clima-laboral-draft-';
+
+    // --- Datos de preguntas ---
+    const agreeOptions = [
+      { value: '1', label: '1 Muy en desacuerdo' },
+      { value: '2', label: '2 En desacuerdo' },
+      { value: '3', label: '3 Ni de acuerdo ni en desacuerdo' },
+      { value: '4', label: '4 De acuerdo' },
+      { value: '5', label: '5 Muy de acuerdo' },
+      { value: '9', label: '9 No aplica o no sabe' },
+    ];
+    const freqOptions = [
+      { value: '1', label: '1 Nunca' },
+      { value: '2', label: '2 Rara vez' },
+      { value: '3', label: '3 Algunas veces' },
+      { value: '4', label: '4 La mayoría de las veces' },
+      { value: '5', label: '5 Siempre' },
+      { value: '9', label: '9 No aplica o no sabe' },
+    ];
+
+    const sections = [
+      {
+        title: 'Sección 1: Estructura',
+        desc: 'Datos generales del puesto y unidad.',
+        questions: [
+          { id: 'q1', text: '¿Cuál es su cargo en este hospital?', type: 'text' },
+          { id: 'q2', text: '¿Cuál es su unidad o área de trabajo principal en este hospital?', type: 'text' },
+        ],
+      },
+      {
+        title: 'Sección 2: Unidad / área de trabajo',
+        desc: 'Escala 1 Muy en desacuerdo - 5 Muy de acuerdo - 9 No aplica o no sabe',
+        questions: [
+          { id: 'q3', text: 'En esta unidad, trabajamos en equipo de manera eficiente', type: 'scale', options: agreeOptions },
+          { id: 'q4', text: 'En esta unidad, tenemos suficiente personal para hacer todo el trabajo', type: 'scale', options: agreeOptions },
+          { id: 'q5', text: 'El personal en esta unidad trabaja más horas de lo que es mejor para el cuidado del paciente', type: 'scale', options: agreeOptions },
+          { id: 'q6', text: 'Esta unidad revisa periódicamente los procesos de trabajo para determinar si se necesita hacer cambios para mejorar la seguridad del paciente', type: 'scale', options: agreeOptions },
+          { id: 'q7', text: 'Esta unidad se sostiene con personal no estable de la institución', type: 'scale', options: agreeOptions },
+          { id: 'q8', text: 'En esta unidad, el personal siente que sus errores son considerados en su contra', type: 'scale', options: agreeOptions },
+          { id: 'q9', text: 'Cuando se reporta un incidente en esta unidad, se siente que la persona está siendo denunciada y no el problema', type: 'scale', options: agreeOptions },
+          { id: 'q10', text: 'Cuando hay mucho trabajo, el personal en esta unidad se ayuda mutuamente', type: 'scale', options: agreeOptions },
+          { id: 'q11', text: 'El comportamiento irrespetuoso de quienes trabajan en esta unidad genera problemas', type: 'scale', options: agreeOptions },
+          { id: 'q12', text: 'Cuando el personal comete errores, esta unidad se enfoca en aprender en vez de buscar quién tiene la culpa', type: 'scale', options: agreeOptions },
+          { id: 'q13', text: 'El ritmo de trabajo en esta unidad es tan acelerado que impacta negativamente en la seguridad del paciente', type: 'scale', options: agreeOptions },
+          { id: 'q14', text: 'En esta unidad, los cambios para mejorar la seguridad de los pacientes se evalúan para ver qué tan efectivos son', type: 'scale', options: agreeOptions },
+          { id: 'q15', text: 'En esta unidad falta apoyo al personal involucrado en errores de seguridad de paciente', type: 'scale', options: agreeOptions },
+          { id: 'q16', text: 'Esta unidad permite que los mismos problemas de seguridad del paciente sigan ocurriendo', type: 'scale', options: agreeOptions },
+        ],
+      },
+      {
+        title: 'Sección 3: Supervisión',
+        desc: 'Escala 1 Muy en desacuerdo - 5 Muy de acuerdo - 9 No aplica o no sabe',
+        questions: [
+          { id: 'q17', text: 'Mi superior considera seriamente las sugerencias del personal para mejorar la seguridad del paciente', type: 'scale', options: agreeOptions },
+          { id: 'q18', text: 'Mi superior quiere que trabajemos más rápido durante las horas de más trabajo, incluso si eso significa no seguir los procedimientos adecuadamente, lo cual podría poner en riesgo la seguridad del paciente', type: 'scale', options: agreeOptions },
+          { id: 'q19', text: 'Mi superior toma medidas para solucionar problemas que le han sido comunicados respecto a la seguridad del paciente', type: 'scale', options: agreeOptions },
+        ],
+      },
+      {
+        title: 'Sección 4: Comunicación',
+        desc: 'Escala 1 Nunca - 5 Siempre - 9 No aplica o no sabe',
+        questions: [
+          { id: 'q20', text: 'Se nos informa sobre los errores que se cometen en esta unidad', type: 'scale', options: freqOptions },
+          { id: 'q21', text: 'Cuando se cometen errores en esta unidad, hablamos sobre las maneras para evitar que vuelvan a ocurrir', type: 'scale', options: freqOptions },
+          { id: 'q22', text: 'En esta unidad, se nos informa sobre los cambios que se hacen basados en reportes de eventos', type: 'scale', options: freqOptions },
+          { id: 'q23', text: 'En esta unidad, el personal dice si ve algo que podría afectar negativamente el cuidado del paciente', type: 'scale', options: freqOptions },
+          { id: 'q24', text: 'Cuando el personal de esta unidad ve a alguien con mayor autoridad haciendo algo que no es seguro para los pacientes, lo dice', type: 'scale', options: freqOptions },
+          { id: 'q25', text: 'Cuando el personal de esta unidad habla, las personas que tienen más autoridad escuchan sus preocupaciones sobre la seguridad del paciente', type: 'scale', options: freqOptions },
+          { id: 'q26', text: 'En esta unidad, el personal tiene miedo de hacer preguntas cuando algo no parece estar bien', type: 'scale', options: freqOptions },
+        ],
+      },
+      {
+        title: 'Sección 5: Reporte de eventos de seguridad del paciente',
+        desc: 'Escala 1 Nunca - 5 Siempre - 9 No aplica o no sabe',
+        questions: [
+          { id: 'q27', text: 'Si se descubre un error y se corrige antes de que afecte al paciente, ¿con qué frecuencia se reporta?', type: 'scale', options: freqOptions },
+          { id: 'q28', text: 'Si un error afecta al paciente y podría haberle causado daño pero no fue así, ¿con qué frecuencia se reporta?', type: 'scale', options: freqOptions },
+          { id: 'q29', text: 'En los últimos 12 meses, ¿cuántos eventos relacionados con la seguridad del paciente ha reportado usted?', type: 'select', options: [
+            { value: 'Ninguno', label: 'Ninguno' },
+            { value: '1 a 2', label: '1 a 2' },
+            { value: '3 a 5', label: '3 a 5' },
+            { value: '6 a 10', label: '6 a 10' },
+            { value: '11 o más', label: '11 o más' },
+          ]},
+        ],
+      },
+      {
+        title: 'Sección 6: Calificación de la seguridad de pacientes',
+        desc: 'Seleccione la opción que mejor califica su unidad.',
+        questions: [
+          { id: 'q30', text: '¿Cómo califica la seguridad del paciente en su unidad de trabajo?', type: 'select', options: [
+            { value: 'Mala', label: 'Mala' },
+            { value: 'Regular', label: 'Regular' },
+            { value: 'Buena', label: 'Buena' },
+            { value: 'Muy Buena', label: 'Muy Buena' },
+            { value: 'Excelente', label: 'Excelente' },
+          ]},
+        ],
+      },
+      {
+        title: 'Sección 7: El establecimiento',
+        desc: 'Escala 1 Muy en desacuerdo - 5 Muy de acuerdo - 9 No aplica o no sabe',
+        questions: [
+          { id: 'q31', text: 'Las acciones de la Dirección de este hospital demuestran que la seguridad del paciente es una prioridad institucional', type: 'scale', options: agreeOptions },
+          { id: 'q32', text: 'La Dirección del hospital proporciona los recursos adecuados para mejorar la seguridad del paciente', type: 'scale', options: agreeOptions },
+          { id: 'q33', text: 'La Dirección del hospital parece interesada en la seguridad del paciente solo después de que ocurre un evento adverso', type: 'scale', options: agreeOptions },
+          { id: 'q34', text: 'Se omite información importante al transferir pacientes de una unidad a otra', type: 'scale', options: agreeOptions },
+          { id: 'q35', text: 'Durante los cambios de turno, con frecuencia se pierde información importante sobre el cuidado del paciente', type: 'scale', options: agreeOptions },
+          { id: 'q36', text: 'Durante los cambios de turno, hay tiempo suficiente para intercambiar toda la información clave sobre el cuidado del paciente', type: 'scale', options: agreeOptions },
+        ],
+      },
+      {
+        title: 'Sección 8: Preguntas generales',
+        desc: 'Seleccione la opción que corresponda.',
+        questions: [
+          { id: 'q37', text: '¿Cuánto tiempo lleva trabajando en este hospital?', type: 'select', options: [
+            { value: 'Menos de 1 año', label: 'Menos de 1 año' },
+            { value: 'De 1 a 5 años', label: 'De 1 a 5 años' },
+            { value: 'De 6 a 10 años', label: 'De 6 a 10 años' },
+            { value: '11 o más años', label: '11 o más años' },
+          ]},
+          { id: 'q38', text: 'En este hospital, ¿cuánto lleva usted trabajando en su unidad/área de trabajo actual?', type: 'select', options: [
+            { value: 'Menos de 1 año', label: 'Menos de 1 año' },
+            { value: 'De 1 a 5 años', label: 'De 1 a 5 años' },
+            { value: 'De 6 a 10 años', label: 'De 6 a 10 años' },
+            { value: '11 o más años', label: '11 o más años' },
+          ]},
+          { id: 'q39', text: 'Típicamente, ¿cuántas horas a la semana trabaja usted en este hospital?', type: 'select', options: [
+            { value: 'Menos de 30 horas a la semana', label: 'Menos de 30 horas a la semana' },
+            { value: 'De 30 a 40 horas a la semana', label: 'De 30 a 40 horas a la semana' },
+            { value: 'Más de 40 horas a la semana', label: 'Más de 40 horas a la semana' },
+          ]},
+          { id: 'q40', text: 'En su cargo, ¿típicamente tiene usted interacción o contacto directo con los pacientes?', type: 'select', options: [
+            { value: 'Sí', label: 'Sí, típicamente tengo interacción o contacto directo con los pacientes' },
+            { value: 'No', label: 'No, típicamente NO tengo interacción ni contacto directo con los pacientes' },
+          ]},
+        ],
+      },
+      {
+        title: 'Sección 9: Comentarios',
+        desc: 'Campo abierto.',
+        questions: [
+          { id: 'q41', text: 'Por favor no dude en anotar cualquier comentario que tenga sobre cómo se hace o podría hacer el trabajo en su hospital que podría influir en la seguridad del paciente.', type: 'textarea' },
+        ],
+      },
+    ];
+
+    // --- Estado ---
+    let currentUser = null;
+    let finalSubmitted = false;
+
+    const loginForm = document.getElementById('login-form');
+    const loginError = document.getElementById('login-error');
+    const loginCard = document.getElementById('login-card');
+    const formCard = document.getElementById('formulario');
+    const reportCard = document.getElementById('reporte');
+    const userChip = document.getElementById('user-chip');
+    const statusChip = document.getElementById('status-chip');
+    const questionsContainer = document.getElementById('questions');
+    const surveyForm = document.getElementById('survey-form');
+    const feedback = document.getElementById('form-feedback');
+    const saveDraftBtn = document.getElementById('save-draft');
+    const submitFinalBtn = document.getElementById('submit-final');
+
+    function renderSections() {
+      questionsContainer.innerHTML = '';
+      sections.forEach(section => {
+        const wrapper = document.createElement('div');
+        wrapper.className = 'section-block';
+        const h = document.createElement('h3');
+        h.className = 'section-block__title';
+        h.textContent = section.title;
+        const p = document.createElement('p');
+        p.className = 'section-block__desc';
+        p.textContent = section.desc;
+        wrapper.appendChild(h);
+        wrapper.appendChild(p);
+
+        section.questions.forEach(q => {
+          const field = document.createElement('div');
+          field.className = 'field';
+          const label = document.createElement('label');
+          label.className = 'field__label';
+          label.htmlFor = q.id;
+          label.textContent = q.text;
+          field.appendChild(label);
+
+          let inputNode;
++          // Inputs según tipo
+          if (q.type === 'text') {
+            inputNode = document.createElement('input');
+            inputNode.type = 'text';
+            inputNode.id = q.id;
+            inputNode.name = q.id;
+          } else if (q.type === 'textarea') {
+            inputNode = document.createElement('textarea');
+            inputNode.id = q.id;
+            inputNode.name = q.id;
+          } else if (q.type === 'select') {
+            inputNode = document.createElement('select');
+            inputNode.id = q.id;
+            inputNode.name = q.id;
+            const empty = document.createElement('option');
+            empty.value = '';
+            empty.textContent = 'Seleccione...';
+            inputNode.appendChild(empty);
+            q.options.forEach(opt => {
+              const option = document.createElement('option');
+              option.value = opt.value;
+              option.textContent = opt.label;
+              inputNode.appendChild(option);
+            });
+          } else if (q.type === 'scale') {
+            const optionsGrid = document.createElement('div');
+            optionsGrid.className = 'options-grid';
+            q.options.forEach(opt => {
+              const labelOpt = document.createElement('label');
+              labelOpt.className = 'option-pill';
+              const radio = document.createElement('input');
+              radio.type = 'radio';
+              radio.name = q.id;
+              radio.value = opt.value;
+              labelOpt.appendChild(radio);
+              const span = document.createElement('span');
+              span.textContent = opt.label;
+              labelOpt.appendChild(span);
+              optionsGrid.appendChild(labelOpt);
+            });
+            inputNode = optionsGrid;
+          }
+
+          field.appendChild(inputNode);
+          questionsContainer.appendChild(field);
+        });
+      });
+    }
+
+    function setFeedback(message, tone = 'info') {
+      feedback.textContent = message;
+      feedback.classList.add('feedback--visible');
+      feedback.style.borderColor = tone === 'error' ? 'rgba(220,38,38,0.4)' : varColor(tone);
+      feedback.style.color = tone === 'error' ? '#b91c1c' : '#0f172a';
+    }
+    function clearFeedback() {
+      feedback.textContent = '';
+      feedback.classList.remove('feedback--visible');
+    }
+    function varColor(tone) {
+      if (tone === 'success') return 'rgba(15,157,88,0.4)';
+      if (tone === 'warning') return 'rgba(245,158,11,0.5)';
+      return 'rgba(31,63,166,0.4)';
+    }
+
+    function serializeAnswers() {
+      const data = {};
+      sections.forEach(section => {
+        section.questions.forEach(q => {
+          const name = q.id;
+          if (q.type === 'scale') {
+            const checked = surveyForm.querySelector(`input[name="${name}"]:checked`);
+            data[name] = checked ? checked.value : '';
+          } else {
+            const control = surveyForm.querySelector(`#${name}`);
+            data[name] = control ? control.value.trim() : '';
+          }
+        });
+      });
+      return data;
+    }
+
+    function fillForm(values) {
+      if (!values) return;
+      sections.forEach(section => {
+        section.questions.forEach(q => {
+          const val = values[q.id] || '';
+          if (q.type === 'scale') {
+            const radio = surveyForm.querySelector(`input[name="${q.id}"][value="${val}"]`);
+            if (radio) radio.checked = true;
+          } else {
+            const control = surveyForm.querySelector(`#${q.id}`);
+            if (control) control.value = val;
+          }
+        });
+      });
+    }
+
+    function localKey(user) {
+      return `${LOCAL_KEY_PREFIX}${user}`;
+    }
+
+    function loadLocalDraft(user) {
+      const raw = localStorage.getItem(localKey(user));
+      if (!raw) return null;
+      try {
+        return JSON.parse(raw);
+      } catch {
+        return null;
+      }
+    }
+
+    function saveLocalDraft(user, data) {
+      localStorage.setItem(localKey(user), JSON.stringify(data));
+    }
+
+    function handleLogin(evt) {
+      evt.preventDefault();
+      clearFeedback();
+      loginError.classList.remove('feedback--visible');
+      const user = (document.getElementById('username').value || '').trim().toLowerCase();
+      const pass = (document.getElementById('password').value || '').trim();
+      if (!user || USERS[user] !== pass) {
+        loginError.textContent = 'Usuario o contraseña inválidos.';
+        loginError.classList.add('feedback--visible');
+        return;
+      }
+      currentUser = user;
+      userChip.textContent = `Usuario: ${user}`;
+      userChip.classList.remove('hidden');
+      loginCard.classList.add('hidden');
+      formCard.classList.remove('hidden');
+      reportCard.classList.remove('hidden');
+      const stored = loadLocalDraft(user);
+      if (stored && stored.answers) {
+        fillForm(stored.answers);
+        statusChip.textContent = 'Borrador cargado';
+      } else {
+        statusChip.textContent = 'Borrador editable';
+      }
+    }
+
+    function setLocked() {
+      finalSubmitted = true;
+      surveyForm.classList.add('locked');
+      saveDraftBtn.disabled = true;
+      submitFinalBtn.disabled = true;
+      statusChip.textContent = 'Respuesta enviada';
+      statusChip.style.background = 'rgba(15,157,88,0.15)';
+      statusChip.style.color = '#0f9d58';
+      setFeedback('Gracias por completar este cuestionario. Sus respuestas han sido registradas.', 'success');
+    }
+
+    async function sendToSheets(payload) {
+      if (!SHEETS_WEBAPP_URL || SHEETS_WEBAPP_URL.startsWith('REEMPLAZAR')) {
+        throw new Error('Configurar SHEETS_WEBAPP_URL con el Web App de Apps Script.');
+      }
+      const resp = await fetch(SHEETS_WEBAPP_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        mode: 'cors',
+        body: JSON.stringify(payload),
+      });
+      if (!resp.ok) throw new Error('No se pudo guardar en Sheets (HTTP ' + resp.status + ').');
+      try { return await resp.json(); } catch { return {}; }
+    }
+
+    async function handleSave(status) {
+      if (!currentUser) {
+        setFeedback('Debe iniciar sesión antes de guardar.', 'error');
+        return;
+      }
+      if (finalSubmitted) return;
+      const answers = serializeAnswers();
+      saveLocalDraft(currentUser, { answers, status });
+      const payload = {
+        usuario: currentUser,
+        estado: status,
+        timestamp: new Date().toISOString(),
+        respuestas: answers,
+      };
+      try {
+        setFeedback(status === 'borrador' ? 'Guardando borrador...' : 'Enviando respuesta...');
+        await sendToSheets(payload);
+        if (status === 'borrador') {
+          setFeedback('Borrador guardado en Sheets.', 'success');
+          statusChip.textContent = 'Borrador guardado';
+        } else {
+          setLocked();
+        }
+      } catch (err) {
+        setFeedback(err.message || 'No se pudo enviar. Reintente.', 'error');
+      }
+    }
+
+    function init() {
+      renderSections();
+      loginForm.addEventListener('submit', handleLogin);
+      surveyForm.addEventListener('input', () => {
+        if (currentUser && !finalSubmitted) {
+          const answers = serializeAnswers();
+          saveLocalDraft(currentUser, { answers, status: 'borrador' });
+        }
+      });
+      saveDraftBtn.addEventListener('click', () => handleSave('borrador'));
+      submitFinalBtn.addEventListener('click', () => handleSave('completo'));
+    }
+
+    document.addEventListener('DOMContentLoaded', init);
+  </script>
+</body>
+</html>
