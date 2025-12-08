@@ -1,34 +1,32 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Clima Laboral - Cuestionario</title>
+  <title>Encuesta sobre Clima Laboral</title>
+  <link rel="icon" href="logo_favaloro.png" type="image/png" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;500;600;700&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg: #f5f7fb;
+      --text: #515151;
+      --muted: #666666;
+      --primary: #003A70;
+      --primary-2: #005A87;
+      --accent: #EF2B2D;
       --card: #ffffff;
-      --border: #e2e8f0;
-      --text: #0f172a;
-      --muted: #475569;
-      --primary: #1f3fa6;
-      --primary-soft: #3857c9;
-      --accent: #5f7bff;
-      --success: #0f9d58;
-      --warning: #f59e0b;
-      --danger: #dc2626;
-      --shadow: 0 14px 35px rgba(31, 63, 166, 0.08);
-      --radius: 14px;
+      --border: #e0e0e0;
+      --bg: #f6f6f6;
+      --shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+      --radius: 12px;
     }
     * { box-sizing: border-box; }
     body {
       margin: 0;
-      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      font-family: 'Raleway', system-ui, -apple-system, sans-serif;
       color: var(--text);
-      background: radial-gradient(circle at 20% 20%, #eef2ff 0, #f8fafc 35%, #f8fafc 100%);
+      background: var(--bg);
       min-height: 100vh;
     }
     a { color: var(--primary); text-decoration: none; }
@@ -36,18 +34,17 @@
       position: sticky;
       top: 0;
       z-index: 10;
-      backdrop-filter: blur(12px);
-      background: rgba(248, 250, 252, 0.9);
-      border-bottom: 1px solid var(--border);
+      background: #fff;
+      border-bottom: 3px solid var(--primary);
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
     }
     .topbar__inner {
       max-width: 1100px;
       margin: 0 auto;
-      padding: 14px 20px;
+      padding: 12px 20px;
       display: flex;
       align-items: center;
-      justify-content: space-between;
-      gap: 12px;
+      gap: 16px;
     }
     .brand {
       display: flex;
@@ -58,32 +55,79 @@
       letter-spacing: -0.02em;
     }
     .brand__logo {
-      width: 38px;
-      height: 38px;
-      border-radius: 12px;
-      background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+      width: 42px;
+      height: 42px;
+      border-radius: 8px;
+      background: #fff;
+      border: 2px solid var(--primary);
       display: grid;
       place-items: center;
-      color: #fff;
-      font-weight: 700;
-      font-size: 18px;
-      box-shadow: var(--shadow);
+      overflow: hidden;
     }
+    .brand__logo img { width: 100%; height: 100%; object-fit: contain; }
     nav {
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 10px;
       flex-wrap: wrap;
+      margin-left: auto;
     }
-    nav a {
-      padding: 10px 14px;
-      border-radius: 12px;
+    nav a, nav select {
+      padding: 8px 12px;
+      border-radius: 8px;
       font-weight: 600;
       color: var(--muted);
+      text-transform: uppercase;
+      font-size: 13px;
+      letter-spacing: 0.4px;
     }
-    nav a:hover { background: rgba(31, 63, 166, 0.08); color: var(--primary); }
+    nav a:hover { background: var(--bg); color: var(--primary); }
+    nav select {
+      border: 1px solid var(--border);
+      background: #fff;
+      cursor: pointer;
+    }
+    .nav-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: rgba(0, 58, 112, 0.08);
+      color: var(--primary);
+      font-weight: 700;
+      cursor: pointer;
+      border: 1px solid rgba(0, 58, 112, 0.14);
+      transition: background 0.15s ease, box-shadow 0.15s ease;
+    }
+    .nav-chip:hover { background: rgba(0, 58, 112, 0.12); box-shadow: 0 4px 10px rgba(0,0,0,0.06); }
+    .profile-menu {
+      position: absolute;
+      top: 110%;
+      right: 0;
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      box-shadow: 0 12px 30px rgba(0,0,0,0.1);
+      padding: 8px 0;
+      min-width: 180px;
+      display: none;
+      z-index: 20;
+    }
+    .profile-menu.open { display: block; }
+    .profile-menu button {
+      width: 100%;
+      text-align: left;
+      background: none;
+      border: none;
+      padding: 10px 14px;
+      font-weight: 600;
+      color: var(--text);
+      cursor: pointer;
+    }
+    .profile-menu button:hover { background: var(--bg); }
     .badge {
-      background: rgba(31, 63, 166, 0.08);
+      background: rgba(0, 58, 112, 0.08);
       color: var(--primary);
       padding: 8px 12px;
       border-radius: 999px;
@@ -91,34 +135,25 @@
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      font-size: 14px;
+      font-size: 13px;
     }
     .hero {
-      max-width: 1100px;
-      margin: 24px auto 10px;
-      padding: 0 20px;
+      background: var(--primary);
+      color: #fff;
+      padding: 42px 20px;
+      box-shadow: inset 0 -3px 0 var(--accent);
     }
     .hero__card {
-      background: linear-gradient(135deg, rgba(31, 63, 166, 0.95) 0%, rgba(95, 123, 255, 0.95) 100%);
-      color: #fff;
-      border-radius: 20px;
-      padding: 28px;
-      box-shadow: var(--shadow);
-      position: relative;
-      overflow: hidden;
+      max-width: 1100px;
+      margin: 0 auto;
+      display: grid;
+      gap: 10px;
     }
-    .hero__card::after {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: radial-gradient(circle at 80% 20%, rgba(255,255,255,0.35), transparent 40%);
-      pointer-events: none;
-    }
-    .hero__title { margin: 0 0 10px; font-size: 26px; letter-spacing: -0.01em; }
-    .hero__text { margin: 0; max-width: 720px; color: rgba(255,255,255,0.92); line-height: 1.5; }
+    .hero__title { margin: 0 0 6px; font-size: 30px; font-weight: 700; letter-spacing: -0.01em; }
+    .hero__text { margin: 0; max-width: 760px; color: rgba(255,255,255,0.92); line-height: 1.5; }
     .page {
       max-width: 1100px;
-      margin: 0 auto 60px;
+      margin: 20px auto 60px;
       padding: 0 20px;
       display: grid;
       gap: 16px;
@@ -130,11 +165,7 @@
       padding: 22px;
       box-shadow: var(--shadow);
     }
-    .card__title {
-      margin: 0 0 8px;
-      font-size: 20px;
-      letter-spacing: -0.01em;
-    }
+    .card__title { margin: 0 0 4px; font-size: 20px; letter-spacing: -0.01em; color: var(--primary); }
     .card__lead { margin: 0 0 12px; color: var(--muted); }
     form { display: grid; gap: 18px; }
     .field {
@@ -142,8 +173,8 @@
       gap: 8px;
       padding: 14px;
       border: 1px solid var(--border);
-      border-radius: 12px;
-      background: #fafbff;
+      border-radius: 10px;
+      background: #fff;
     }
     .field__label {
       font-weight: 600;
@@ -151,6 +182,7 @@
       margin: 0;
       line-height: 1.4;
     }
+    .field__desc { margin: 0; color: var(--muted); font-size: 14px; }
     input[type="text"], select, textarea {
       width: 100%;
       padding: 12px 12px;
@@ -174,7 +206,7 @@
     }
     .option-pill {
       border: 1px solid var(--border);
-      border-radius: 12px;
+      border-radius: 10px;
       padding: 10px 12px;
       display: flex;
       gap: 8px;
@@ -183,18 +215,41 @@
       cursor: pointer;
       transition: all 0.15s ease;
     }
-    .option-pill:hover { border-color: var(--primary-soft); box-shadow: 0 6px 18px rgba(31, 63, 166, 0.08); }
+    .option-pill:hover { border-color: var(--primary); box-shadow: 0 4px 10px rgba(0, 0, 0, 0.06); }
     .option-pill input { margin: 0; }
-    .section-block {
-      border: 1px solid var(--border);
+    .section-card {
+      margin: 22px 0;
       border-radius: 14px;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border);
+      background: #fff;
+    }
+    .section-card__header {
+      padding: 14px 16px;
+      background: linear-gradient(90deg, var(--primary), var(--primary-2));
+      color: #fff;
+    }
+    .section-card__tag {
+      display: inline-block;
+      padding: 6px 10px;
+      border-radius: 8px;
+      background: var(--accent);
+      color: #fff;
+      font-weight: 700;
+      font-size: 12px;
+      letter-spacing: 0.4px;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+      border: 1px solid #c02022;
+    }
+    .section-card__title { margin: 0 0 6px; font-size: 21px; color: #fff; }
+    .section-card__desc { margin: 0 0 8px; color: rgba(255,255,255,0.9); font-size: 15px; }
+    .section-card__note { margin: 0; color: rgba(255,255,255,0.9); font-size: 13px; font-weight: 600; }
+    .section-card__body {
       padding: 16px;
       background: #fff;
-      box-shadow: inset 0 1px 0 rgba(15, 23, 42, 0.03);
     }
-    .section-block + .section-block { margin-top: 8px; }
-    .section-block__title { margin: 0 0 4px; font-size: 18px; }
-    .section-block__desc { margin: 0 0 12px; color: var(--muted); }
     .actions {
       display: flex;
       flex-wrap: wrap;
@@ -204,7 +259,7 @@
     button {
       border: none;
       padding: 12px 16px;
-      border-radius: 12px;
+      border-radius: 10px;
       font-weight: 700;
       cursor: pointer;
       font-size: 15px;
@@ -212,14 +267,13 @@
     }
     button:disabled { opacity: 0.6; cursor: not-allowed; }
     .btn-primary {
-      background: linear-gradient(135deg, var(--primary) 0%, var(--primary-soft) 100%);
+      background: var(--accent);
       color: #fff;
       box-shadow: var(--shadow);
     }
     .btn-secondary {
-      background: #fff;
-      color: var(--primary);
-      border: 1px solid var(--primary);
+      background: var(--primary);
+      color: #fff;
     }
     .status {
       display: inline-flex;
@@ -245,12 +299,6 @@
     .feedback--visible { display: block; }
     .hidden { display: none; }
     .locked { opacity: 0.7; pointer-events: none; }
-    iframe {
-      width: 100%;
-      height: 520px;
-      border: 1px solid var(--border);
-      border-radius: 12px;
-    }
     footer {
       max-width: 1100px;
       margin: 30px auto 60px;
@@ -269,26 +317,46 @@
   <header class="topbar">
     <div class="topbar__inner">
       <div class="brand">
-        <div class="brand__logo">CL</div>
+        <div class="brand__logo">
+          <img src="logo_favaloro.png" alt="Fundación Favaloro" onerror="this.style.display='none'" />
+        </div>
         <div>
-          Clima Laboral
-          <div style="font-size:12px; color: var(--muted); font-weight:500;">Cuestionario institucional</div>
+          Hospital Favaloro
+          <div style="font-size:12px; color: var(--muted); font-weight:500;">Área de Calidad y Seguridad</div>
         </div>
       </div>
       <nav>
-        <a href="#formulario">Formulario</a>
-        <a href="#reporte">BI</a>
-        <span id="user-chip" class="badge hidden">Sin usuario</span>
+        <div id="section-chip" class="nav-chip" aria-haspopup="true" aria-expanded="false">
+          <span>Formulario</span>
+          <i class="fa-solid fa-chevron-down" aria-hidden="true" style="font-size:12px;"></i>
+          <div id="section-menu" class="profile-menu" role="menu">
+            <button type="button" role="menuitem" data-section-target="section-1">Estructura</button>
+            <button type="button" role="menuitem" data-section-target="section-2">Unidad / área de trabajo</button>
+            <button type="button" role="menuitem" data-section-target="section-3">Supervisión</button>
+            <button type="button" role="menuitem" data-section-target="section-4">Comunicación</button>
+            <button type="button" role="menuitem" data-section-target="section-5">Reporte de eventos</button>
+            <button type="button" role="menuitem" data-section-target="section-6">Calificación de seguridad</button>
+            <button type="button" role="menuitem" data-section-target="section-7">El establecimiento</button>
+            <button type="button" role="menuitem" data-section-target="section-8">Preguntas generales</button>
+            <button type="button" role="menuitem" data-section-target="section-9">Comentarios</button>
+          </div>
+        </div>
+        <div id="user-chip" class="nav-chip hidden" aria-haspopup="true" aria-expanded="false">
+          <span id="user-chip-text">Usuario</span>
+          <i class="fa-solid fa-chevron-down" aria-hidden="true" style="font-size:12px;"></i>
+          <div id="profile-menu" class="profile-menu" role="menu">
+            <button id="logout-btn" type="button" role="menuitem">Cerrar sesión</button>
+          </div>
+        </div>
       </nav>
     </div>
   </header>
 
   <section class="hero">
     <div class="hero__card">
-      <h1 class="hero__title">Portal de Clima Laboral</h1>
+      <h1 class="hero__title">Encuesta sobre Clima Laboral</h1>
       <p class="hero__text">
-        Ingrese con su usuario para responder el cuestionario institucional. Puede guardar un borrador o
-        enviarlo de forma definitiva. Una vez enviado, las respuestas no se podrán modificar.
+        Complete el cuestionario: puede guardar y retomarlo más tarde. Una vez enviado, no podrá editarse. Todas las respuestas se registran de forma anónima y se usarán solo con fines de mejora interna.
       </p>
     </div>
   </section>
@@ -300,52 +368,43 @@
       <form id="login-form">
         <div class="field">
           <label class="field__label" for="username">Usuario</label>
-          <input id="username" name="username" type="text" autocomplete="username" placeholder="Ej: acaputi" required />
+          <input id="username" name="username" type="text" autocomplete="username" placeholder="usuariofavaloro" required />
         </div>
         <div class="field">
           <label class="field__label" for="password">Contraseña</label>
-          <input id="password" name="password" type="password" autocomplete="current-password" placeholder="Ej: acaputi" required />
+          <input id="password" name="password" type="password" autocomplete="current-password" placeholder="********" required />
         </div>
         <div class="actions">
           <button type="submit" class="btn-primary">Ingresar</button>
-          <div class="status status--info">Usuarios de prueba: acaputi / rmaidana</div>
         </div>
         <div id="login-error" class="feedback"></div>
       </form>
     </section>
 
     <section id="formulario" class="card hidden">
-      <div class="actions" style="justify-content: space-between; align-items: center;">
-        <div>
-          <h2 class="card__title" style="margin: 0;">Cuestionario</h2>
-          <p class="card__lead" style="margin: 2px 0 0;">Complete todas las preguntas. Puede guardar borrador antes de enviar.</p>
-        </div>
-        <div id="status-chip" class="badge">Borrador editable</div>
-      </div>
+       <div class="actions" style="justify-content: flex-end; align-items: center;">
+         <div id="status-chip" class="badge hidden" aria-hidden="true">Borrador editable</div>
+       </div>
       <form id="survey-form" aria-label="Cuestionario de clima laboral">
         <div id="questions"></div>
         <div class="actions">
           <button id="save-draft" type="button" class="btn-secondary">Guardar borrador</button>
-          <button id="submit-final" type="button" class="btn-primary">Enviar respuesta final</button>
+          <button id="submit-final" type="button" class="btn-primary">Enviar respuesta</button>
         </div>
         <div id="form-feedback" class="feedback"></div>
       </form>
     </section>
 
-    <section id="reporte" class="card hidden">
-      <h2 class="card__title">BI preliminar</h2>
-      <p class="card__lead">Este reporte se alimentará desde la hoja de respuestas.</p>
-      <iframe src="https://lookerstudio.google.com/embed/reporting/e8853ba7-5d63-48fe-9c4b-0a21213edd7b/page/R5sfF" allowfullscreen></iframe>
-    </section>
   </main>
 
   <footer>
-    Fundación Favaloro - Clima Laboral. Una vez enviada la respuesta, no podrá editarse.
+    Rosario Maidana.
   </footer>
 
   <script>
     // --- Configuracion ---
-    const SHEETS_WEBAPP_URL = 'REEMPLAZAR_CON_URL_WEBAPP_APPS_SCRIPT';
+    const SHEETS_WEBAPP_URL = 'https://script.google.com/macros/s/AKfycbxM254gFYKeS9vqq1iBhIkQ-2nMc9uaOUyhITxkTHT1SyDpKe2_eXviM_qBEGwJFHH-JQ/exec';
+    const AUTH_KEY = 'clima-laboral-auth';
     const USERS = {
       acaputi: 'acaputi',
       rmaidana: 'rmaidana',
@@ -354,34 +413,34 @@
 
     // --- Datos de preguntas ---
     const agreeOptions = [
-      { value: '1', label: '1 Muy en desacuerdo' },
-      { value: '2', label: '2 En desacuerdo' },
-      { value: '3', label: '3 Ni de acuerdo ni en desacuerdo' },
-      { value: '4', label: '4 De acuerdo' },
-      { value: '5', label: '5 Muy de acuerdo' },
-      { value: '9', label: '9 No aplica o no sabe' },
+      { value: '1', label: 'Muy en desacuerdo' },
+      { value: '2', label: 'En desacuerdo' },
+      { value: '3', label: 'Ni de acuerdo ni en desacuerdo' },
+      { value: '4', label: 'De acuerdo' },
+      { value: '5', label: 'Muy de acuerdo' },
+      { value: '9', label: 'No aplica o no sabe' },
     ];
     const freqOptions = [
-      { value: '1', label: '1 Nunca' },
-      { value: '2', label: '2 Rara vez' },
-      { value: '3', label: '3 Algunas veces' },
-      { value: '4', label: '4 La mayoría de las veces' },
-      { value: '5', label: '5 Siempre' },
-      { value: '9', label: '9 No aplica o no sabe' },
+      { value: '1', label: 'Nunca' },
+      { value: '2', label: 'Rara vez' },
+      { value: '3', label: 'Algunas veces' },
+      { value: '4', label: 'La mayoría de las veces' },
+      { value: '5', label: 'Siempre' },
+      { value: '9', label: 'No aplica o no sabe' },
     ];
 
     const sections = [
       {
-        title: 'Sección 1: Estructura',
-        desc: 'Datos generales del puesto y unidad.',
+        title: 'Estructura',
+        desc: 'Piense en su "unidad" como el área de trabajo, departamento o área clínica del hospital donde pasa la mayor parte de su tiempo de trabajo.',
         questions: [
           { id: 'q1', text: '¿Cuál es su cargo en este hospital?', type: 'text' },
           { id: 'q2', text: '¿Cuál es su unidad o área de trabajo principal en este hospital?', type: 'text' },
         ],
       },
       {
-        title: 'Sección 2: Unidad / área de trabajo',
-        desc: 'Escala 1 Muy en desacuerdo - 5 Muy de acuerdo - 9 No aplica o no sabe',
+        title: 'Unidad / área de trabajo',
+        desc: '¿Qué tan de acuerdo o en desacuerdo está usted con las siguientes afirmaciones sobre su unidad/área de trabajo?',
         questions: [
           { id: 'q3', text: 'En esta unidad, trabajamos en equipo de manera eficiente', type: 'scale', options: agreeOptions },
           { id: 'q4', text: 'En esta unidad, tenemos suficiente personal para hacer todo el trabajo', type: 'scale', options: agreeOptions },
@@ -400,8 +459,8 @@
         ],
       },
       {
-        title: 'Sección 3: Supervisión',
-        desc: 'Escala 1 Muy en desacuerdo - 5 Muy de acuerdo - 9 No aplica o no sabe',
+        title: 'Supervisión',
+        desc: '¿Qué tan de acuerdo o en desacuerdo está usted con las siguientes afirmaciones sobre su unidad/área de trabajo?',
         questions: [
           { id: 'q17', text: 'Mi superior considera seriamente las sugerencias del personal para mejorar la seguridad del paciente', type: 'scale', options: agreeOptions },
           { id: 'q18', text: 'Mi superior quiere que trabajemos más rápido durante las horas de más trabajo, incluso si eso significa no seguir los procedimientos adecuadamente, lo cual podría poner en riesgo la seguridad del paciente', type: 'scale', options: agreeOptions },
@@ -409,8 +468,8 @@
         ],
       },
       {
-        title: 'Sección 4: Comunicación',
-        desc: 'Escala 1 Nunca - 5 Siempre - 9 No aplica o no sabe',
+        title: 'Comunicación',
+        desc: 'Seleccione una sola opción por afirmación.',
         questions: [
           { id: 'q20', text: 'Se nos informa sobre los errores que se cometen en esta unidad', type: 'scale', options: freqOptions },
           { id: 'q21', text: 'Cuando se cometen errores en esta unidad, hablamos sobre las maneras para evitar que vuelvan a ocurrir', type: 'scale', options: freqOptions },
@@ -422,12 +481,12 @@
         ],
       },
       {
-        title: 'Sección 5: Reporte de eventos de seguridad del paciente',
-        desc: 'Escala 1 Nunca - 5 Siempre - 9 No aplica o no sabe',
+        title: 'Reporte de eventos de seguridad del paciente',
+        desc: 'Seleccione una sola opción por afirmación.',
         questions: [
           { id: 'q27', text: 'Si se descubre un error y se corrige antes de que afecte al paciente, ¿con qué frecuencia se reporta?', type: 'scale', options: freqOptions },
           { id: 'q28', text: 'Si un error afecta al paciente y podría haberle causado daño pero no fue así, ¿con qué frecuencia se reporta?', type: 'scale', options: freqOptions },
-          { id: 'q29', text: 'En los últimos 12 meses, ¿cuántos eventos relacionados con la seguridad del paciente ha reportado usted?', type: 'select', options: [
+          { id: 'q29', text: 'En los últimos 12 meses, ¿cuántos eventos relacionados con la seguridad del paciente ha reportado usted?', type: 'scale', options: [
             { value: 'Ninguno', label: 'Ninguno' },
             { value: '1 a 2', label: '1 a 2' },
             { value: '3 a 5', label: '3 a 5' },
@@ -437,10 +496,10 @@
         ],
       },
       {
-        title: 'Sección 6: Calificación de la seguridad de pacientes',
-        desc: 'Seleccione la opción que mejor califica su unidad.',
+        title: 'Calificación de la seguridad de pacientes',
+        desc: 'Seleccione una sola opción por afirmación.',
         questions: [
-          { id: 'q30', text: '¿Cómo califica la seguridad del paciente en su unidad de trabajo?', type: 'select', options: [
+          { id: 'q30', text: '¿Cómo califica la seguridad del paciente en su unidad de trabajo?', type: 'scale', options: [
             { value: 'Mala', label: 'Mala' },
             { value: 'Regular', label: 'Regular' },
             { value: 'Buena', label: 'Buena' },
@@ -450,8 +509,8 @@
         ],
       },
       {
-        title: 'Sección 7: El establecimiento',
-        desc: 'Escala 1 Muy en desacuerdo - 5 Muy de acuerdo - 9 No aplica o no sabe',
+        title: 'El establecimiento',
+        desc: '¿Qué tan de acuerdo o en desacuerdo está usted con las siguientes afirmaciones sobre su unidad/área de trabajo?',
         questions: [
           { id: 'q31', text: 'Las acciones de la Dirección de este hospital demuestran que la seguridad del paciente es una prioridad institucional', type: 'scale', options: agreeOptions },
           { id: 'q32', text: 'La Dirección del hospital proporciona los recursos adecuados para mejorar la seguridad del paciente', type: 'scale', options: agreeOptions },
@@ -462,35 +521,35 @@
         ],
       },
       {
-        title: 'Sección 8: Preguntas generales',
-        desc: 'Seleccione la opción que corresponda.',
+        title: 'Preguntas generales',
+        desc: 'Seleccione una sola opción por afirmación.',
         questions: [
-          { id: 'q37', text: '¿Cuánto tiempo lleva trabajando en este hospital?', type: 'select', options: [
+          { id: 'q37', text: '¿Cuánto tiempo lleva trabajando en este hospital?', type: 'scale', options: [
             { value: 'Menos de 1 año', label: 'Menos de 1 año' },
             { value: 'De 1 a 5 años', label: 'De 1 a 5 años' },
             { value: 'De 6 a 10 años', label: 'De 6 a 10 años' },
             { value: '11 o más años', label: '11 o más años' },
           ]},
-          { id: 'q38', text: 'En este hospital, ¿cuánto lleva usted trabajando en su unidad/área de trabajo actual?', type: 'select', options: [
+          { id: 'q38', text: 'En este hospital, ¿cuánto lleva usted trabajando en su unidad/área de trabajo actual?', type: 'scale', options: [
             { value: 'Menos de 1 año', label: 'Menos de 1 año' },
             { value: 'De 1 a 5 años', label: 'De 1 a 5 años' },
             { value: 'De 6 a 10 años', label: 'De 6 a 10 años' },
             { value: '11 o más años', label: '11 o más años' },
           ]},
-          { id: 'q39', text: 'Típicamente, ¿cuántas horas a la semana trabaja usted en este hospital?', type: 'select', options: [
+          { id: 'q39', text: 'Típicamente, ¿cuántas horas a la semana trabaja usted en este hospital?', type: 'scale', options: [
             { value: 'Menos de 30 horas a la semana', label: 'Menos de 30 horas a la semana' },
             { value: 'De 30 a 40 horas a la semana', label: 'De 30 a 40 horas a la semana' },
             { value: 'Más de 40 horas a la semana', label: 'Más de 40 horas a la semana' },
           ]},
-          { id: 'q40', text: 'En su cargo, ¿típicamente tiene usted interacción o contacto directo con los pacientes?', type: 'select', options: [
+          { id: 'q40', text: 'En su cargo, ¿típicamente tiene usted interacción o contacto directo con los pacientes?', type: 'scale', options: [
             { value: 'Sí', label: 'Sí, típicamente tengo interacción o contacto directo con los pacientes' },
             { value: 'No', label: 'No, típicamente NO tengo interacción ni contacto directo con los pacientes' },
           ]},
         ],
       },
       {
-        title: 'Sección 9: Comentarios',
-        desc: 'Campo abierto.',
+        title: 'Comentarios',
+        desc: 'Seleccione una sola opción por afirmación.',
         questions: [
           { id: 'q41', text: 'Por favor no dude en anotar cualquier comentario que tenga sobre cómo se hace o podría hacer el trabajo en su hospital que podría influir en la seguridad del paciente.', type: 'textarea' },
         ],
@@ -505,40 +564,62 @@
     const loginError = document.getElementById('login-error');
     const loginCard = document.getElementById('login-card');
     const formCard = document.getElementById('formulario');
-    const reportCard = document.getElementById('reporte');
     const userChip = document.getElementById('user-chip');
+    const userChipText = document.getElementById('user-chip-text');
+    const profileMenu = document.getElementById('profile-menu');
+    const sectionChip = document.getElementById('section-chip');
+    const sectionMenu = document.getElementById('section-menu');
     const statusChip = document.getElementById('status-chip');
     const questionsContainer = document.getElementById('questions');
     const surveyForm = document.getElementById('survey-form');
     const feedback = document.getElementById('form-feedback');
     const saveDraftBtn = document.getElementById('save-draft');
     const submitFinalBtn = document.getElementById('submit-final');
+    const logoutBtn = document.getElementById('logout-btn');
 
     function renderSections() {
+      let questionCounter = 0;
       questionsContainer.innerHTML = '';
-      sections.forEach(section => {
-        const wrapper = document.createElement('div');
-        wrapper.className = 'section-block';
+      sections.forEach((section, idx) => {
+        const card = document.createElement('div');
+        card.className = 'section-card';
+        card.id = `section-${idx + 1}`;
+
+        const header = document.createElement('div');
+        header.className = 'section-card__header';
+        const tag = document.createElement('div');
+        tag.className = 'section-card__tag';
+        tag.textContent = `Sección ${idx + 1}`;
         const h = document.createElement('h3');
-        h.className = 'section-block__title';
-        h.textContent = section.title;
-        const p = document.createElement('p');
-        p.className = 'section-block__desc';
-        p.textContent = section.desc;
-        wrapper.appendChild(h);
-        wrapper.appendChild(p);
+        h.className = 'section-card__title';
+        h.textContent = `${section.title}`;
+        const desc = document.createElement('p');
+        desc.className = 'section-card__desc';
+        desc.textContent = section.desc;
+        header.appendChild(tag);
+        header.appendChild(h);
+        header.appendChild(desc);
+        if (section.note) {
+          const note = document.createElement('p');
+          note.className = 'section-card__note';
+          note.textContent = section.note;
+          header.appendChild(note);
+        }
+
+        const body = document.createElement('div');
+        body.className = 'section-card__body';
 
         section.questions.forEach(q => {
+          const number = ++questionCounter;
           const field = document.createElement('div');
           field.className = 'field';
           const label = document.createElement('label');
           label.className = 'field__label';
           label.htmlFor = q.id;
-          label.textContent = q.text;
+          label.textContent = `${number}. ${q.text}`;
           field.appendChild(label);
 
           let inputNode;
-+          // Inputs según tipo
           if (q.type === 'text') {
             inputNode = document.createElement('input');
             inputNode.type = 'text';
@@ -582,8 +663,12 @@
           }
 
           field.appendChild(inputNode);
-          questionsContainer.appendChild(field);
+          body.appendChild(field);
         });
+
+        card.appendChild(header);
+        card.appendChild(body);
+        questionsContainer.appendChild(card);
       });
     }
 
@@ -654,6 +739,42 @@
       localStorage.setItem(localKey(user), JSON.stringify(data));
     }
 
+    function applySession(user) {
+      currentUser = user;
+      userChipText.textContent = `Usuario: ${user}`;
+      userChip.classList.remove('hidden');
+      userChip.setAttribute('aria-expanded', 'false');
+      loginCard.classList.add('hidden');
+      formCard.classList.remove('hidden');
+      const stored = loadLocalDraft(user);
+      surveyForm.classList.remove('locked');
+      saveDraftBtn.disabled = false;
+      submitFinalBtn.disabled = false;
+      finalSubmitted = false;
+      if (stored && stored.answers) {
+        fillForm(stored.answers);
+        statusChip.textContent = 'Borrador cargado';
+      } else {
+        surveyForm.reset();
+        statusChip.textContent = 'Borrador editable';
+      }
+    }
+
+    function clearSession() {
+      currentUser = null;
+      finalSubmitted = false;
+      surveyForm.reset();
+      surveyForm.classList.remove('locked');
+      saveDraftBtn.disabled = false;
+      submitFinalBtn.disabled = false;
+      userChip.classList.add('hidden');
+      profileMenu.classList.remove('open');
+      loginCard.classList.remove('hidden');
+      formCard.classList.add('hidden');
+      statusChip.textContent = 'Borrador editable';
+      localStorage.removeItem(AUTH_KEY);
+    }
+
     function handleLogin(evt) {
       evt.preventDefault();
       clearFeedback();
@@ -665,19 +786,8 @@
         loginError.classList.add('feedback--visible');
         return;
       }
-      currentUser = user;
-      userChip.textContent = `Usuario: ${user}`;
-      userChip.classList.remove('hidden');
-      loginCard.classList.add('hidden');
-      formCard.classList.remove('hidden');
-      reportCard.classList.remove('hidden');
-      const stored = loadLocalDraft(user);
-      if (stored && stored.answers) {
-        fillForm(stored.answers);
-        statusChip.textContent = 'Borrador cargado';
-      } else {
-        statusChip.textContent = 'Borrador editable';
-      }
+      localStorage.setItem(AUTH_KEY, user);
+      applySession(user);
     }
 
     function setLocked() {
@@ -736,6 +846,61 @@
     function init() {
       renderSections();
       loginForm.addEventListener('submit', handleLogin);
+      logoutBtn.addEventListener('click', () => {
+        clearSession();
+      });
+      const sectionJump = document.getElementById('section-jump');
+      if (sectionJump) {
+        sectionJump.addEventListener('change', () => {
+          const target = sectionJump.value;
+          if (target) {
+            const el = document.getElementById(target);
+            if (el) {
+              el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }
+            sectionJump.value = '';
+          }
+        });
+      }
+      userChip.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const isOpen = profileMenu.classList.contains('open');
+        profileMenu.classList.toggle('open', !isOpen);
+        userChip.setAttribute('aria-expanded', (!isOpen).toString());
+      });
+      if (sectionChip) {
+        sectionChip.addEventListener('click', (e) => {
+          e.stopPropagation();
+          const isOpen = sectionMenu.classList.contains('open');
+          sectionMenu.classList.toggle('open', !isOpen);
+          sectionChip.setAttribute('aria-expanded', (!isOpen).toString());
+        });
+      }
+      document.querySelectorAll('[data-section-target]').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const target = btn.getAttribute('data-section-target');
+          if (target) {
+            const el = document.getElementById(target);
+            if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }
+          sectionMenu.classList.remove('open');
+          sectionChip.setAttribute('aria-expanded', 'false');
+        });
+      });
+      document.addEventListener('click', (e) => {
+        if (profileMenu.classList.contains('open') && !userChip.contains(e.target)) {
+          profileMenu.classList.remove('open');
+          userChip.setAttribute('aria-expanded', 'false');
+        }
+        if (sectionMenu && sectionMenu.classList.contains('open') && !sectionChip.contains(e.target)) {
+          sectionMenu.classList.remove('open');
+          sectionChip.setAttribute('aria-expanded', 'false');
+        }
+      });
+      const storedUser = localStorage.getItem(AUTH_KEY);
+      if (storedUser && USERS[storedUser]) {
+        applySession(storedUser);
+      }
       surveyForm.addEventListener('input', () => {
         if (currentUser && !finalSubmitted) {
           const answers = serializeAnswers();
@@ -750,3 +915,4 @@
   </script>
 </body>
 </html>
+
