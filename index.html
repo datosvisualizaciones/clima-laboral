@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Encuesta sobre Clima Laboral</title>
+  <title>Encuesta sobre Seguridad en Servicios de Salud</title>
   <link rel="icon" href="logo_favaloro.png" type="image/png" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -201,7 +201,7 @@
     textarea { min-height: 110px; resize: vertical; }
     .options-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      grid-template-columns: 1fr;
       gap: 8px;
     }
     .option-pill {
@@ -214,6 +214,7 @@
       background: #fff;
       cursor: pointer;
       transition: all 0.15s ease;
+      width: 100%;
     }
     .option-pill:hover { border-color: var(--primary); box-shadow: 0 4px 10px rgba(0, 0, 0, 0.06); }
     .option-pill input { margin: 0; }
@@ -354,7 +355,7 @@
 
   <section class="hero">
     <div class="hero__card">
-      <h1 class="hero__title">Encuesta sobre Clima Laboral</h1>
+      <h1 class="hero__title">Encuesta sobre Seguridad en Servicios de Salud</h1>
       <p class="hero__text">
         Complete el cuestionario: puede guardar y retomarlo más tarde. Una vez enviado, no podrá editarse. Todas las respuestas se registran de forma anónima y se usarán solo con fines de mejora interna.
       </p>
@@ -403,7 +404,7 @@
 
   <script>
     // --- Configuracion ---
-    const SHEETS_WEBAPP_URL = 'https://script.google.com/macros/s/AKfycbxM254gFYKeS9vqq1iBhIkQ-2nMc9uaOUyhITxkTHT1SyDpKe2_eXviM_qBEGwJFHH-JQ/exec';
+    const SHEETS_WEBAPP_URL = '/api.php'; // endpoint PHP+MySQL en el mismo host
     const AUTH_KEY = 'clima-laboral-auth';
     const USERS = {
       acaputi: 'acaputi',
