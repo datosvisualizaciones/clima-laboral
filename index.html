@@ -261,6 +261,8 @@
       border-bottom: 2px solid var(--border);
       margin-bottom: 20px;
       overflow-x: auto;
+      background: #f8f9fa;
+      border-radius: 8px 8px 0 0;
     }
     .tab-button {
       padding: 12px 20px;
@@ -273,16 +275,27 @@
       transition: all 0.2s ease;
       white-space: nowrap;
       flex-shrink: 0;
+      border-radius: 8px 8px 0 0;
+      position: relative;
+      z-index: 1;
     }
     .tab-button:hover {
       color: var(--primary);
+      background: rgba(var(--primary-rgb), 0.1);
     }
     .tab-button.active {
       color: var(--primary);
       border-bottom-color: var(--primary);
+      background: #fff;
+      box-shadow: 0 -2px 4px rgba(0,0,0,0.1);
     }
     .tab-content {
       display: none;
+      border: 1px solid var(--border);
+      border-top: none;
+      border-radius: 0 0 8px 8px;
+      padding: 20px;
+      background: #fff;
     }
     .tab-content.active {
       display: block;
@@ -675,32 +688,28 @@
       tabsContainer.appendChild(tabsContent);
       questionsContainer.appendChild(tabsContainer);
 
-      // Agregar funcionalidad de pestañas
-      setupTabs();
-    }
-
-    function setupTabs() {
-      const tabButtons = document.querySelectorAll('.tab-button');
-      const tabContents = document.querySelectorAll('.tab-content');
-
-      tabButtons.forEach(button => {
-        button.addEventListener('click', () => {
-          // Remover clase active de todos los botones y contenidos
-          tabButtons.forEach(btn => btn.classList.remove('active'));
-          tabContents.forEach(content => content.classList.remove('active'));
-
-          // Agregar clase active al botón clickeado
-          button.classList.add('active');
-
-          // Mostrar el contenido correspondiente
+      // Agregar funcionalidad de pestañas usando delegación de eventos
+      tabsContainer.addEventListener('click', (e) => {
+        if (e.target.classList.contains('tab-button')) {
+          e.preventDefault();
+          const button = e.target;
           const tabId = button.dataset.tab;
+
+
+          // Remover clase active de todos los botones y contenidos
+          tabsContainer.querySelectorAll('.tab-button').forEach(btn => btn.classList.remove('active'));
+          tabsContainer.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+
+          // Agregar clase active al botón clickeado y su contenido
+          button.classList.add('active');
           const tabContent = document.getElementById(tabId);
           if (tabContent) {
             tabContent.classList.add('active');
           }
-        });
+        }
       });
     }
+
 
     function setFeedback(message, tone = 'info') {
       feedback.textContent = message;
