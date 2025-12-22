@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Encuesta sobre Seguridad en Servicios de Salud</title>
+  <title>AUTOEVALUACIÓN EN BUENAS PRÁCTICAS PARA LA MEJORA DE LA CALIDAD EN LOS SERVICIOS DE SALUD</title>
   <link rel="icon" href="logo_favaloro.png" type="image/png" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -336,10 +336,6 @@
             <button type="button" role="menuitem" data-section-target="section-3">Supervisión</button>
             <button type="button" role="menuitem" data-section-target="section-4">Comunicación</button>
             <button type="button" role="menuitem" data-section-target="section-5">Reporte de eventos</button>
-            <button type="button" role="menuitem" data-section-target="section-6">Calificación de seguridad</button>
-            <button type="button" role="menuitem" data-section-target="section-7">El establecimiento</button>
-            <button type="button" role="menuitem" data-section-target="section-8">Preguntas generales</button>
-            <button type="button" role="menuitem" data-section-target="section-9">Comentarios</button>
           </div>
         </div>
         <div id="user-chip" class="nav-chip hidden" aria-haspopup="true" aria-expanded="false">
@@ -494,65 +490,6 @@
             { value: '6 a 10', label: '6 a 10' },
             { value: '11 o más', label: '11 o más' },
           ]},
-        ],
-      },
-      {
-        title: 'Calificación de la seguridad de pacientes',
-        desc: 'Seleccione una sola opción por afirmación.',
-        questions: [
-          { id: 'q30', text: '¿Cómo califica la seguridad del paciente en su unidad de trabajo?', type: 'scale', options: [
-            { value: 'Mala', label: 'Mala' },
-            { value: 'Regular', label: 'Regular' },
-            { value: 'Buena', label: 'Buena' },
-            { value: 'Muy Buena', label: 'Muy Buena' },
-            { value: 'Excelente', label: 'Excelente' },
-          ]},
-        ],
-      },
-      {
-        title: 'El establecimiento',
-        desc: '¿Qué tan de acuerdo o en desacuerdo está usted con las siguientes afirmaciones sobre su unidad/área de trabajo?',
-        questions: [
-          { id: 'q31', text: 'Las acciones de la Dirección de este hospital demuestran que la seguridad del paciente es una prioridad institucional', type: 'scale', options: agreeOptions },
-          { id: 'q32', text: 'La Dirección del hospital proporciona los recursos adecuados para mejorar la seguridad del paciente', type: 'scale', options: agreeOptions },
-          { id: 'q33', text: 'La Dirección del hospital parece interesada en la seguridad del paciente solo después de que ocurre un evento adverso', type: 'scale', options: agreeOptions },
-          { id: 'q34', text: 'Se omite información importante al transferir pacientes de una unidad a otra', type: 'scale', options: agreeOptions },
-          { id: 'q35', text: 'Durante los cambios de turno, con frecuencia se pierde información importante sobre el cuidado del paciente', type: 'scale', options: agreeOptions },
-          { id: 'q36', text: 'Durante los cambios de turno, hay tiempo suficiente para intercambiar toda la información clave sobre el cuidado del paciente', type: 'scale', options: agreeOptions },
-        ],
-      },
-      {
-        title: 'Preguntas generales',
-        desc: 'Seleccione una sola opción por afirmación.',
-        questions: [
-          { id: 'q37', text: '¿Cuánto tiempo lleva trabajando en este hospital?', type: 'scale', options: [
-            { value: 'Menos de 1 año', label: 'Menos de 1 año' },
-            { value: 'De 1 a 5 años', label: 'De 1 a 5 años' },
-            { value: 'De 6 a 10 años', label: 'De 6 a 10 años' },
-            { value: '11 o más años', label: '11 o más años' },
-          ]},
-          { id: 'q38', text: 'En este hospital, ¿cuánto lleva usted trabajando en su unidad/área de trabajo actual?', type: 'scale', options: [
-            { value: 'Menos de 1 año', label: 'Menos de 1 año' },
-            { value: 'De 1 a 5 años', label: 'De 1 a 5 años' },
-            { value: 'De 6 a 10 años', label: 'De 6 a 10 años' },
-            { value: '11 o más años', label: '11 o más años' },
-          ]},
-          { id: 'q39', text: 'Típicamente, ¿cuántas horas a la semana trabaja usted en este hospital?', type: 'scale', options: [
-            { value: 'Menos de 30 horas a la semana', label: 'Menos de 30 horas a la semana' },
-            { value: 'De 30 a 40 horas a la semana', label: 'De 30 a 40 horas a la semana' },
-            { value: 'Más de 40 horas a la semana', label: 'Más de 40 horas a la semana' },
-          ]},
-          { id: 'q40', text: 'En su cargo, ¿típicamente tiene usted interacción o contacto directo con los pacientes?', type: 'scale', options: [
-            { value: 'Sí', label: 'Sí, típicamente tengo interacción o contacto directo con los pacientes' },
-            { value: 'No', label: 'No, típicamente NO tengo interacción ni contacto directo con los pacientes' },
-          ]},
-        ],
-      },
-      {
-        title: 'Comentarios',
-        desc: 'Seleccione una sola opción por afirmación.',
-        questions: [
-          { id: 'q41', text: 'Por favor no dude en anotar cualquier comentario que tenga sobre cómo se hace o podría hacer el trabajo en su hospital que podría influir en la seguridad del paciente.', type: 'textarea' },
         ],
       },
     ];

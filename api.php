@@ -27,13 +27,13 @@ if (!$usuario || !in_array($estado, ['borrador','completo'], true)) {
 try {
   $pdo = new PDO("mysql:host=$DB_HOST;dbname=$DB_NAME;charset=utf8mb4", $DB_USER, $DB_PASS, [PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION]);
   $cols = ['usuario','estado','timestamp'];
-  for ($i=1; $i<=41; $i++) $cols[] = "q$i";
+  for ($i=1; $i<=29; $i++) $cols[] = "q$i";
   $placeholders = implode(',', array_fill(0, count($cols), '?'));
   $assignments  = implode(',', array_map(fn($c)=>"$c=VALUES($c)", $cols));
   $sql = "INSERT INTO respuestas (".implode(',',$cols).") VALUES ($placeholders) ON DUPLICATE KEY UPDATE $assignments";
 
   $vals = [$usuario, $estado, date('Y-m-d H:i:s', strtotime($timestamp))];
-  for ($i=1; $i<=41; $i++) { $vals[] = $respuestas["q$i"] ?? ''; }
+  for ($i=1; $i<=29; $i++) { $vals[] = $respuestas["q$i"] ?? ''; }
 
   $stmt = $pdo->prepare($sql);
   $stmt->execute($vals);
