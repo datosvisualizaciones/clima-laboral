@@ -322,13 +322,13 @@
           <img src="logo_favaloro.png" alt="Fundación Favaloro" onerror="this.style.display='none'" />
         </div>
         <div>
-          Hospital Universitario Fundación Favaloro
-          <div style="font-size:12px; color: var(--muted); font-weight:500;">Departamento de Calidad y Seguridad</div>
+          Hospital Favaloro
+          <div style="font-size:12px; color: var(--muted); font-weight:500;">Área de Calidad y Seguridad</div>
         </div>
       </div>
       <nav>
         <div id="section-chip" class="nav-chip" aria-haspopup="true" aria-expanded="false">
-          <span>Formulario</span>
+          <span>Dimensiones</span>
           <i class="fa-solid fa-chevron-down" aria-hidden="true" style="font-size:12px;"></i>
           <div id="section-menu" class="profile-menu" role="menu">
             <button type="button" role="menuitem" data-section-target="section-1">Estructura</button>
@@ -406,6 +406,10 @@
     // --- Configuracion ---
     const SHEETS_WEBAPP_URL = '/api.php'; // endpoint PHP+MySQL en el mismo host
     const AUTH_KEY = 'clima-laboral-auth';
+    const USERS = {
+      acaputi: 'acaputi',
+      rmaidana: 'rmaidana',
+    };
     const LOCAL_KEY_PREFIX = 'clima-laboral-draft-';
 
     // --- Datos de preguntas ---
@@ -772,55 +776,19 @@
       localStorage.removeItem(AUTH_KEY);
     }
 
-    async function loginUser(username, password) {
-      try {
-        const response = await fetch('api.php', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            action: 'login',
-            usuario: username,
-            password: password
-          })
-        });
-
-        const result = await response.json();
-        if (result.ok) {
-          localStorage.setItem(AUTH_KEY, JSON.stringify({
-            usuario: result.usuario,
-            token: result.token,
-            timestamp: Date.now()
-          }));
-          return true;
-        } else {
-          throw new Error(result.error);
-        }
-      } catch (error) {
-        throw new Error('Error de conexión o credenciales inválidas');
-      }
-    }
-
-    async function handleLogin(evt) {
+    function handleLogin(evt) {
       evt.preventDefault();
       clearFeedback();
       loginError.classList.remove('feedback--visible');
-
       const user = (document.getElementById('username').value || '').trim().toLowerCase();
       const pass = (document.getElementById('password').value || '').trim();
-
-      if (!user || !pass) {
-        loginError.textContent = 'Usuario y contraseña requeridos.';
+      if (!user || USERS[user] !== pass) {
+        loginError.textContent = 'Usuario o contraseña inválidos.';
         loginError.classList.add('feedback--visible');
         return;
       }
-
-      try {
-        await loginUser(user, pass);
-        applySession(user);
-      } catch (error) {
-        loginError.textContent = error.message;
-        loginError.classList.add('feedback--visible');
-      }
+      localStorage.setItem(AUTH_KEY, user);
+      applySession(user);
     }
 
     function setLocked() {
@@ -854,20 +822,10 @@
         return;
       }
       if (finalSubmitted) return;
-
-      // Obtener token de sesión
-      const session = JSON.parse(localStorage.getItem(AUTH_KEY) || '{}');
-      if (!session.token) {
-        setFeedback('Sesión expirada. Por favor, inicie sesión nuevamente.', 'error');
-        clearSession();
-        return;
-      }
-
       const answers = serializeAnswers();
       saveLocalDraft(currentUser, { answers, status });
       const payload = {
         usuario: currentUser,
-        token: session.token,
         estado: status,
         timestamp: new Date().toISOString(),
         respuestas: answers,
@@ -876,7 +834,7 @@
         setFeedback(status === 'borrador' ? 'Guardando borrador...' : 'Enviando respuesta...');
         await sendToSheets(payload);
         if (status === 'borrador') {
-          setFeedback('Borrador guardado.', 'success');
+          setFeedback('Borrador guardado en Sheets.', 'success');
           statusChip.textContent = 'Borrador guardado';
         } else {
           setLocked();
